@@ -94,10 +94,19 @@
      
 
       <div class="row">
-        <div class="col-12">
-          <div class="card">
+        <div class="col-md-6">
+          <div class="card card-success">
+            {{-- <div class="card-header">
+              <h3 class="card-title">Status</h3>
+            </div> --}}
             <div class="card-header">
               <h3 class="card-title">Status</h3>
+              <div class="card-tools">
+                <a class="pensil" type="button" data-toggle="modal" data-target="#modal-success" hak_id="{{$komputer->id}}">
+                  <i class="fas fa-plus"></i>
+                </a>
+                </button>
+              </div>
             </div>
             <!-- ./card-header -->
             <div class="card-body">
