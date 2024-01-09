@@ -1,7 +1,19 @@
 @extends('layouts.master')
 
 @push('styles')
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+<style>
+  .param_img_holder {
+    display: none;  
+  }
+
+  .param_img_holder img.img-fluid {
+    width: 250px;
+    height: 200px;
+    margin-bottom: 10px;
+  }
+</style>
+
 @endpush
 
 @section('content')
@@ -32,7 +44,7 @@
             </ul>
         </div>
       @endif
-        <form action="/computer" method="POST">
+        <form action="/computer" method="POST" enctype="multipart/form-data">
           @csrf
                       
         <div class="form-group">
@@ -114,11 +126,30 @@
           <label>Tanggal Mulai</label>
           <input name="tanggal_mulai" type="datetime-local" class="form-control" placeholder="Tanggal Mulai">
         </div>
+        <div class="col-md-6">
+          <table>
+            <tr>
+              <td class="border-0">
+                <input type="file" class="form-control file-input" name="image[]" />
+              </td>
+              <td class="border-0">
+                <div class="param_img_holder"></div>
+              </td>
+            </tr>
+            <tr>  
+              <td class="border-0">
+                <input type="file" class="form-control file-input" name="image[]" />
+              </td>
+              <td class="border-0">
+                <div class="param_img_holder"></div>
+              </td>
+            </tr>
+          </table>  
+        </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form> 
       </div>
     </div>
- 
   </div>
 
 </div>
@@ -137,6 +168,7 @@
                 data: function (params) {
                 var query = {
                     search: params.term,
+                    // type: 'public'
                 }
 
                 // Query parameters will be ?search=[term]&type=public
@@ -146,5 +178,38 @@
             });
     });
 </script>
+
+<script>
+  const validExtensions = ['jpeg', 'jpg', 'png', 'gif', 'webp'];
+
+    $('table').on('change', '.file-input', function() {
+      const $input = $(this);
+      const imgPath = $input.val();
+      const $imgPreview = $input.closest('tr').find('.param_img_holder');
+      const extension = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+
+      if (typeof(FileReader) == 'undefined') {
+        $imgPreview.html('This browser does not support FileReader');
+        return;
+      }
+
+      if (validExtensions.includes(extension)) {
+        $imgPreview.empty();
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          $('<img/>', {
+            src: e.target.result,
+            class: 'img-fluid'
+          }).appendTo($imgPreview);
+        }
+        $imgPreview.show();
+        reader.readAsDataURL($input[0].files[0]);
+      } else {
+        $imgPreview.empty();
+      }
+    });
+</script>
+
+
 
 @endpush

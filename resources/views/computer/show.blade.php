@@ -5,11 +5,11 @@
 @endpush
 @section('content')
 
-<section class="content">
+
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-6">
-            <div class="card">
+            <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">Data Detail Computer</h3>
             </div>
@@ -70,7 +70,7 @@
         </div>
         <!-- /.col -->
         <div class="col-md-6">
-            <div class="card">
+            <div class="card card-info">
             <div class="card-header">
               <h3 class="card-title">Barcode</h3>
             </div>
@@ -78,7 +78,6 @@
             <div class="card-body p-0">
               <div class="visible-print text-center">
                 <div>
-                 
                   <img class="img-thumbnail" width="300px" src="/storage/{{ $komputer->code}}"> 
                 </div><a type="button" href="/computer/qrcode/{{ $komputer->id }}">Download</a>
                 
@@ -141,10 +140,88 @@
           </div>
           <!-- /.card -->
         </div>
+
+        <div class="col-md-6">
+          <div class="card card-success">
+           
+            <div class="card card-solid">
+            <div class="card-body">
+              {{-- @if($cek->isNotEmpty()) --}}
+              <div class="row">
+               <div class="col-12">
+                {{-- <img class="product-image" alt="Product Image" src="{{ asset('/storage/komputer/' . $cek->first()->filename) }}"> --}}
+               </div>
+                  {{-- <div class="col-12 product-image-thumbs">
+                    @foreach($products->pictures as $file) 
+                    <div class="product-image-thumb "><img src="{{ asset('/storage/alat/' . $file->filename) }}" alt="Product Image"></div>
+                     @endforeach
+                  </div> --}}
+               </div>
+              {{-- @endif --}}
+            </div>
+            </div>
+          </div>
+        </div>
       </div>
       <!-- /.row -->
     </div><!-- /.container-fluid -->
-  </section>
+
+    <div class="modal fade" id="modal-success" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Update Status</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="/computer/update-status" method="post" id="formUpdate">
+              @method('put')
+              @csrf
+              <input type="hidden" name="computer_id" >
+                <select name="status_id" class="form-control">
+                  @foreach($statuses as $status)
+                    <option value="{{ $status->id }}">{{ $status->name}}</option>
+                  @endforeach      
+                </select>
+                
+                <input style="margin-top:10px" name="description" type="text" class="form-control"  >
+                <input style="margin-top:10px" name="tanggal" type="datetime-local" class="form-control"  >
+          </div>
+          <div class="modal-footer">
+            {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> --}}
+            <button type="button" class="btn btn-primary" id="btnUpdate">Update</button>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
   @endsection
+
+  @push('scripts')
+  <script>
+    $(document).ready(function(){
+        $("#btnUpdate").click(function(){
+          $("#formUpdate").submit();
+        });
+
+        $(".pensil").click(function(){
+          var hak_computer = $(this).attr('hak_id');
+          $("input[name=computer_id]").val(hak_computer);
+         
+        })
+      });
+  
+</script>
+<script>
+  $(document).ready(function() {
+    $('.product-image-thumb').on('click', function () {
+      var $image_element = $(this).find('img')
+      $('.product-image').prop('src', $image_element.attr('src'))
+      $('.product-image-thumb.active').removeClass('active')
+      $(this).addClass('active')
+    })
+  })
+</script>
+@endpush

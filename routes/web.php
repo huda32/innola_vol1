@@ -23,6 +23,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/assetIT',[App\Http\Controllers\DashboardController::class,'asset']);
     Route::get('/users', [\App\Http\Controllers\UserController::class,'index']);
 
+    // Route::get('/computer', [\App\Http\Controllers\ComputerController::class,'index']);
     Route::get('/computer', [\App\Http\Controllers\ComputerController::class,'index']);
     Route::get('/computer/create', [\App\Http\Controllers\ComputerController::class,'create']);
     Route::post('/computer', [\App\Http\Controllers\ComputerController::class,'store']);

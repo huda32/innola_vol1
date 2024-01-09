@@ -33,4 +33,8 @@ class Computer extends Model
         return $this->belongsToMany(Status::class)->withPivot('tanggal','berita');
     }
 
+    public function pictures() {
+        return $this->hasMany(PictureTool::class);
+    }
+
 }

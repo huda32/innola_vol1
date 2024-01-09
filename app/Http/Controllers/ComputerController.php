@@ -8,6 +8,7 @@ use App\Models\ComputerUnit;
 use App\Models\keyboard;
 use App\Models\Monitor;
 use App\Models\Mous;
+use App\Models\PictureComputer;
 use App\Models\Status;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -46,13 +47,8 @@ class ComputerController extends Controller
             'proci' => 'required'
         ]);
            
-        $image =  time().rand(1,200).'.png';
-        $header = Computer::latest()->first()->id+1;
-        $qrcode = QrCode::format('png')->size(300)->errorCorrection('H')->generate('http://127.0.0.1:8000/'.'computer.show/'.$header);
-        Storage::disk('public')->put($image, $qrcode);
-        
-      Computer::create([
-            'id' => $header,
+    $image =  time().rand(1,200).'.png';     
+      $kom = Computer::create([
             'user_id' => $request->user_id,
             'computer_id' => $request->computer_id,
             'monitor_id' => $request->monitor_id,
@@ -68,6 +64,18 @@ class ComputerController extends Controller
             'code' => $image
         ]);
 
+        $qrcode = QrCode::format('png')->size(300)->errorCorrection('H')->generate('http://127.0.0.1:8000/'.'computer.show/'.$kom->id);
+        Storage::disk('public')->put($image, $qrcode);
+
+        foreach ($request->file('image') as $file) {
+            $filename = time().rand(1,200).'.'.$file->extension();
+            Storage::disk('public')->put('komputer/'.$filename, file_get_contents($file));
+            PictureComputer::create([
+                'computer_id' => $kom->id,
+                'filename' => $filename
+            ]);
+        }
+
         return redirect('/computer')->with('success','Data Computer Sudah Di Update');
     }
 
@@ -79,7 +87,9 @@ class ComputerController extends Controller
 
     public function show($id){
         $komputer = Computer::find($id);
-       return view('computer.show',compact('komputer'));
+        $statuses = Status::all();
+        // $products = Computer::with('pictures')->find($id);
+       return view('computer.show',compact('komputer','statuses'));
     }
 
     public function qrcode($id){
