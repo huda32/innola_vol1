@@ -137,7 +137,6 @@
                 data: function (params) {
                 var query = {
                     search: params.term,
-                    // type: 'public'
                 }
 
                 // Query parameters will be ?search=[term]&type=public
