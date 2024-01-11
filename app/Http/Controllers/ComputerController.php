@@ -47,7 +47,7 @@ class ComputerController extends Controller
             'proci' => 'required'
         ]);
            
-    $image =  time().rand(1,200).'.png';     
+      $image =  time().rand(1,200).'.png';     
       $kom = Computer::create([
             'user_id' => $request->user_id,
             'computer_id' => $request->computer_id,
@@ -79,22 +79,55 @@ class ComputerController extends Controller
         return redirect('/computer')->with('success','Data Computer Sudah Di Update');
     }
 
+    
+
+    public function storeImage(Request $request){
+        $request->validate([
+            'image' => 'required',         
+        ]);
+
+        foreach ($request->file('image') as $file) {
+            $filename = time().rand(1,200).'.'.$file->extension();
+            Storage::disk('public')->put('komputer/'.$filename, file_get_contents($file));
+            PictureComputer::create([
+                'computer_id' => $request->computer_id,
+                'filename' => $filename
+            ]);
+        }
+        return redirect('/computer'.'/'.$request->computer_id)->with('success','Status Komputer Berhasil Diubah');
+    }
+
     public function updateStatus(Request $request){
         $komputer = Computer::find($request->computer_id);
         $komputer->statuses()->attach($request->status_id, ['berita' => $request->description , 'tanggal' => $request->tanggal]);
-        return redirect('/computer')->with('success','Status Komputer Berhasil Diubah');
+        return redirect('/computer'.'/'.$request->computer_id)->with('success','Status Komputer Berhasil Diubah');
     }
 
     public function show($id){
         $komputer = Computer::find($id);
         $statuses = Status::all();
-        // $products = Computer::with('pictures')->find($id);
-       return view('computer.show',compact('komputer','statuses'));
+        $image = Computer::with('pictures')->find($id);
+        $images = $image->pictures;
+       return view('computer.show',compact('komputer','statuses','image','images'));
     }
 
     public function qrcode($id){
         $komputer = Computer::find($id);
         return response()->download('storage/'.$komputer->code);
+    }
+    public function qrcodeRefresh($id){
+        $komputer = Computer::find($id);
+        $imageDel = $komputer->code;
+        Storage::disk('public')->delete($imageDel);
+        $image =  time().rand(1,200).'.png';
+        $komputer->update([
+            'id' => $id,
+            'code' => $image
+        ]);
+        $qrcode = QrCode::format('png')->size(300)->errorCorrection('H')->generate('http://127.0.0.1:8000/'.'computer.show/'.$id);
+        Storage::disk('public')->put($image, $qrcode);
+
+        return redirect('/computer')->with('success','Barcode Sudah direfresh');
     }
 
     public function destroy($id, Request $request){

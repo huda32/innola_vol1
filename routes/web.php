@@ -27,8 +27,10 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/computer', [\App\Http\Controllers\ComputerController::class,'index']);
     Route::get('/computer/create', [\App\Http\Controllers\ComputerController::class,'create']);
     Route::post('/computer', [\App\Http\Controllers\ComputerController::class,'store']);
+    Route::post('/computer/store-image', [\App\Http\Controllers\ComputerController::class,'storeImage']);
     Route::put('/computer/update-status', [\App\Http\Controllers\ComputerController::class,'updateStatus']);
     Route::get('/computer/qrcode/{id}', [\App\Http\Controllers\ComputerController::class,'qrcode']);
+    Route::get('/computer/qrcode_refresh/{id}', [\App\Http\Controllers\ComputerController::class,'qrcodeRefresh']);
     Route::get('/computer/{id}', [\App\Http\Controllers\ComputerController::class,'show']);
     Route::delete('/computer/{id}', [\App\Http\Controllers\ComputerController::class,'destroy']);
 

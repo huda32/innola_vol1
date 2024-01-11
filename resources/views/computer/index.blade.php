@@ -24,7 +24,7 @@
                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Processor</th>
                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Monitor</th>
                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Ip Local</th>
-                <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Status</th>
+                {{-- <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Status</th> --}}
                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Tanggal Mulai</th>
                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Action</th>
               </tr>
@@ -37,14 +37,14 @@
                 <td class="text-center text-secondary">{{$komputer->proci}}</td>
                 <td class="text-center text-secondary">{{$komputer->monitor->merk_monitor}}</td>
                 <td class="text-center text-secondary">{{$komputer->iplocal}}</td>
-                <td class="text-center text-secondary"> 
+                {{-- <td class="text-center text-secondary"> 
                   @php    
                     $hakStatus = $komputer->statuses()->orderBy('computer_status.tanggal','DESC')->first();     
                   @endphp
                   {{$hakStatus ? $hakStatus->name : ''}}
                   <a class="pensil" type="button" data-toggle="modal" data-target="#modal-success" hak_id="{{$komputer->id}}" >
                   <i class="fa fa-pencil"></i>
-                  </a></td>
+                  </a></td> --}}
                 
                 <td class="text-center text-secondary">{{$komputer->tanggal_mulai}}</td>
                 <td>

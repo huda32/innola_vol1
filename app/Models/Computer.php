@@ -34,7 +34,7 @@ class Computer extends Model
     }
 
     public function pictures() {
-        return $this->hasMany(PictureTool::class);
+        return $this->hasMany(PictureComputer::class);
     }
 
 }
