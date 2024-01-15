@@ -25,7 +25,7 @@
             <div class="card-header">
               <h3 class="card-title">Data Detail Computer</h3>
               <div class="card-tools">
-                <a class="pensil" type="button" data-toggle="modal" data-target="#modal-success" hak_id="{{$komputer->id}}">
+                <a href="/computer/edit/{{$komputer->id}}">
                   <i class="fa fa-pencil"></i>
                 </a>
                 </button>
@@ -225,6 +225,7 @@
         </div>
       </div>
     </div>
+    {{-- modal selesai --}}
 
     {{-- Modal Image --}}
     <div class="modal fade" id="modal-xl" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -265,8 +266,9 @@
         </div>
       </div>
     </div>
-    <!-- /.modal -->
+    <!-- /.modal selesai-->
 
+ 
   @endsection
 
   @push('scripts')

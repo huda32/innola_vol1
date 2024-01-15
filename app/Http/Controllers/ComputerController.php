@@ -111,10 +111,47 @@ class ComputerController extends Controller
        return view('computer.show',compact('komputer','statuses','image','images'));
     }
 
+    public function edit($id){
+        $computer = Computer::find($id);
+        $komputer = ComputerUnit::all();
+        $user = User::all();
+        $monitor = Monitor::all();
+        $mouse = Mous::all();
+        $keyboard = keyboard::all();  
+        return view('computer.update',compact(['computer','komputer','user','monitor','mouse','keyboard']));
+    }
+
+    public function update(Request $request, $id){
+        $request->validate([
+           
+            'computer_id' => 'required',
+            'monitor_id' => 'required',
+            'mouse_id' => 'required',
+            'proci' => 'required'
+        ]);
+        $computer = computer::find($id);   
+       $computer->update([
+           
+            'computer_id' => $request->computer_id,
+            'monitor_id' => $request->monitor_id,
+            'keyboard_id' => $request->keyboard_id,
+            'mouse_id' => $request->mouse_id,
+            'proci' => $request->proci,
+            'memory' => $request->memory,
+            'tambahan' => $request->tambahan,
+            'ram' => $request->ram,
+            'iplocal' => $request->iplocal,
+            'ipvpn' => $request->ipvpn,
+            'tanggal_mulai' => $request->tanggal_mulai,
+        ]);
+        return redirect('/computer'.'/'.$id)->with('success','Data Komputer Berhasil Diubah');
+    }
+
     public function qrcode($id){
         $komputer = Computer::find($id);
         return response()->download('storage/'.$komputer->code);
     }
+
     public function qrcodeRefresh($id){
         $komputer = Computer::find($id);
         $imageDel = $komputer->code;
@@ -126,8 +163,7 @@ class ComputerController extends Controller
         ]);
         $qrcode = QrCode::format('png')->size(300)->errorCorrection('H')->generate('http://127.0.0.1:8000/'.'computer.show/'.$id);
         Storage::disk('public')->put($image, $qrcode);
-
-        return redirect('/computer')->with('success','Barcode Sudah direfresh');
+        return redirect('/computer'.'/'.$id)->with('success','Barcode Sudah direfresh');
     }
 
     public function destroy($id, Request $request){

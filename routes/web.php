@@ -30,6 +30,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/computer/store-image', [\App\Http\Controllers\ComputerController::class,'storeImage']);
     Route::put('/computer/update-status', [\App\Http\Controllers\ComputerController::class,'updateStatus']);
     Route::get('/computer/qrcode/{id}', [\App\Http\Controllers\ComputerController::class,'qrcode']);
+    Route::put('/computer/{id}', [\App\Http\Controllers\ComputerController::class,'update']);
+    Route::get('/computer/edit/{id}', [\App\Http\Controllers\ComputerController::class,'edit']);
     Route::get('/computer/qrcode_refresh/{id}', [\App\Http\Controllers\ComputerController::class,'qrcodeRefresh']);
     Route::get('/computer/{id}', [\App\Http\Controllers\ComputerController::class,'show']);
     Route::delete('/computer/{id}', [\App\Http\Controllers\ComputerController::class,'destroy']);
