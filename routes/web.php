@@ -23,7 +23,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/assetIT',[App\Http\Controllers\DashboardController::class,'asset']);
     Route::get('/users', [\App\Http\Controllers\UserController::class,'index']);
 
-    // Route::get('/computer', [\App\Http\Controllers\ComputerController::class,'index']);
+    // Computer
     Route::get('/computer', [\App\Http\Controllers\ComputerController::class,'index']);
     Route::get('/computer/create', [\App\Http\Controllers\ComputerController::class,'create']);
     Route::post('/computer', [\App\Http\Controllers\ComputerController::class,'store']);
@@ -32,9 +32,11 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/computer/qrcode/{id}', [\App\Http\Controllers\ComputerController::class,'qrcode']);
     Route::put('/computer/{id}', [\App\Http\Controllers\ComputerController::class,'update']);
     Route::get('/computer/edit/{id}', [\App\Http\Controllers\ComputerController::class,'edit']);
+    Route::get('/computer/imageEdit/{id}', [\App\Http\Controllers\ComputerController::class,'imageEdit']);
     Route::get('/computer/qrcode_refresh/{id}', [\App\Http\Controllers\ComputerController::class,'qrcodeRefresh']);
     Route::get('/computer/{id}', [\App\Http\Controllers\ComputerController::class,'show']);
     Route::delete('/computer/{id}', [\App\Http\Controllers\ComputerController::class,'destroy']);
+    Route::get('/computer/imageComputer/{id}/{idImage}', [\App\Http\Controllers\ComputerController::class,'destroyImageComputer']);
 
     Route::get('/tool', [\App\Http\Controllers\ToolController::class,'index']);
     Route::get('/tool/create', [\App\Http\Controllers\ToolController::class,'create']);

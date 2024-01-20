@@ -169,6 +169,9 @@
                 <a class="pen" type="button" data-toggle="modal" data-target="#modal-xl" hak_id="{{$komputer->id}}">
                   <i class="fas fa-plus"></i>
                 </a>
+                <a href="/computer/imageEdit/{{$komputer->id}}" type="button">
+                  <i class="fas fa-minus"></i>
+                </a>
                 </button>
               </div>
             </div>
@@ -218,7 +221,6 @@
                 <input style="margin-top:10px" name="tanggal" type="datetime-local" class="form-control"  >
           </div>
           <div class="modal-footer">
-            {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> --}}
             <button type="button" class="btn btn-primary" id="btnUpdate">Update</button>
           </form>
           </div>

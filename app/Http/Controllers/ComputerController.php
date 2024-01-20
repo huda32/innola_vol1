@@ -112,7 +112,7 @@ class ComputerController extends Controller
     }
 
     public function edit($id){
-        $computer = Computer::find($id);
+        $computer = computer::find($id); 
         $komputer = ComputerUnit::all();
         $user = User::all();
         $monitor = Monitor::all();
@@ -147,6 +147,13 @@ class ComputerController extends Controller
         return redirect('/computer'.'/'.$id)->with('success','Data Komputer Berhasil Diubah');
     }
 
+    public function imageEdit($id){
+        $computer = Computer::find($id);
+        $image = Computer::with('pictures')->find($id);
+        $images = $image->pictures;
+        return view('computer.imageEdit',compact(['computer','image','images']));
+    }
+
     public function qrcode($id){
         $komputer = Computer::find($id);
         return response()->download('storage/'.$komputer->code);
@@ -173,6 +180,14 @@ class ComputerController extends Controller
         Storage::disk('public')->delete($image);
         $komputer->delete();
         return redirect('/computer')->with('success','Data Komputer Berhasil Dihapus');
+    }
+
+    public function destroyImageComputer($id, $idImage){
+        $picture = PictureComputer::find($idImage);
+        $gambar = $picture->filename;
+        $picture->delete();
+        Storage::disk('public')->delete('komputer/'.$gambar);
+        return redirect('/computer'.'/'.'imageEdit/'.$id)->with('success','Gambar Sudah Dihapus');
     }
 
 }
