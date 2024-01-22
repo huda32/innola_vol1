@@ -19,7 +19,7 @@
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="#" class="h1">Deka Sari Perkasa</a>
+      <img src="{{ asset('dist/img/logo.png')}}"  class="img-fluid" style="opacity: .8">
     </div>
     <div class="card-body">
       <p class="login-box-msg">Sign in to start your session</p>
