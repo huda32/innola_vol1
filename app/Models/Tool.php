@@ -25,4 +25,8 @@ class Tool extends Model
     public function pictures() {
         return $this->hasMany(PictureTool::class);
     }
+
+    public function plant(){
+        return $this->belongsTo(Plant::class);
+    }
 }

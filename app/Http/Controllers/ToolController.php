@@ -4,32 +4,44 @@ namespace App\Http\Controllers;
 
 use App\Models\Picture;
 use App\Models\PictureTool;
+use App\Models\Plant;
 use App\Models\Room;
 use App\Models\Status;
 use App\Models\Tool;
 use App\Models\ToolUnit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Js;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ToolController extends Controller
 {
     function index(){
     $alat = Tool::all();
+    $room = Room::all();
     return view('tool.index',compact(['alat']));
     }
 
     public function create(){   
-        $room = Room::all();
+        // $room = Room::all()->pluck();
+
+        $plants = Plant::all()->pluck("name","id");
         $tool = Tool::all();
         $toolUnit = ToolUnit::all();  
-        return view('tool.create',compact(['room','tool','toolUnit']));
+        return view('tool.create',compact(['plants','tool','toolUnit']));
+    }
+
+    public function getRoom(Request $request){
+        $room = Room::all()->where("plant_id", $request->plant_id)
+        ->pluck("room","id");
+        return response()->json($room);
     }
 
     public function store(Request $request){
-       
+      
         $request->validate([
-            'room_id' => 'required',
+            'plant' => 'required',
+            'room' => 'required',
             'tool_unit_id' => 'required',
             'merk_alat' => 'required',
             'id_mesin' => 'required',
@@ -39,7 +51,8 @@ class ToolController extends Controller
         $image =  time().rand(1,200).'.png';
 
         $alat = Tool::create([
-            'room_id' => $request->room_id,
+            'plant_id' => $request->plant,
+            'room_id' => $request->room,
             'tool_unit_id' => $request->tool_unit_id,
             'merk_alat' => $request->merk_alat,
             'id_mesin' => $request->id_mesin,

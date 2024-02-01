@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 @push('styles')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <style>
   .param_img_holder {
@@ -45,15 +46,22 @@
       @endif
         <form action="/tool" method="POST" enctype="multipart/form-data">
           @csrf
+
+
         <div class="form-group">
-          <label for="exampleInputEmail1">Ruangan</label>
-          <select class="form-control" name="room_id">
-          <option>Pilih Ruangan</option>
-              @foreach($room as $ruangan)
-                  <option value="{{ $ruangan->id}}">{{ $ruangan->room}}</option>
-              @endforeach
+          <label>Plant</label>
+          <select class="form-control" name="plant" id="plant">
+            <option value="" selected disabled>Select Plant</option>
+            @foreach ($plants as $key => $plant)
+            <option value="{{ $key }}">{{$plant}}</option>
+            @endforeach
           </select>
         </div>
+
+        <div class="form-group">
+          <label for="room">Ruangan / Gedung</label>
+          <select name="room" id="room" class="form-control"></select>
+      </div>
 
         <div class="form-group">
           <label>Tanggal Mulai</label>
@@ -152,6 +160,74 @@ $('table').on('change', '.file-input', function() {
   }
 });
 </script>
+
+<script>
+  // when country dropdown changes
+  $('#plant').change(function() {
+
+      var plantID = $(this).val();
+
+      if (plantID) {
+
+          $.ajax({
+              type: "GET",
+              url: "{{ url('getRoom') }}?plant_id=" + plantID,
+              success: function(res) {
+
+                  if (res) {
+
+                      $("#room").empty();
+                      $("#room").append('<option>Select Ruangan</option>');
+                      $.each(res, function(key, value) {
+                          $("#room").append('<option value="' + key + '">' + value +
+                              '</option>');
+                      });
+
+                  } else {
+
+                      $("#room").empty();
+                  }
+              }
+          });
+      } else {
+
+          $("#room").empty();
+          $("#city").empty();
+      }
+  });
+
+  // when state dropdown changes
+  // $('#room').on('change', function() {
+
+  //     var stateID = $(this).val();
+
+  //     if (stateID) {
+
+  //         $.ajax({
+  //             type: "GET",
+  //             url: "{{ url('getCity') }}?state_id=" + stateID,
+  //             success: function(res) {
+
+  //                 if (res) {
+  //                     $("#city").empty();
+  //                     $("#city").append('<option>Select City</option>');
+  //                     $.each(res, function(key, value) {
+  //                         $("#city").append('<option value="' + key + '">' + value +
+  //                             '</option>');
+  //                     });
+
+  //                 } else {
+
+  //                     $("#city").empty();
+  //                 }
+  //             }
+  //         });
+  //     } else {
+
+  //         $("#city").empty();
+  //     }
+  // });
+  </script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 

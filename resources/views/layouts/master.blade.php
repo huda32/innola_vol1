@@ -107,13 +107,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/assetGA" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>ASSET GA</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/assetProduksi" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>ASSET PRODUKSI</p>
                 </a>
@@ -130,42 +130,50 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+              {{-- @foreach ($plant as $plants)
               <li class="nav-item">
                 <a href="/assetIT" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>P1</p>
                 </a>
               </li>
+              @endforeach --}}
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/assetPlant/1" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>P1</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/assetPlant/2" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>P2</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/assetPlant/3" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>P3</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/assetPlant/4" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>P4</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/assetPlant/5" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>P5</p>
                 </a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>PAUS</p>
                 </a>
-              </li>
+              </li> --}}
             </ul>
           </li>
           {{-- <li class="nav-item">

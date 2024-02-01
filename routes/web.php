@@ -21,7 +21,10 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/cobacek', [\App\Http\Controllers\Cobacek::class,'index']);
     Route::get('/dashboard',[App\Http\Controllers\DashboardController::class,'index']);
     Route::get('/assetIT',[App\Http\Controllers\DashboardController::class,'asset']);
+    Route::get('/assetGA',[App\Http\Controllers\DashboardController::class,'assetGA']);
+    Route::get('/assetProduksi',[App\Http\Controllers\DashboardController::class,'assetProduksi']);
     Route::get('/users', [\App\Http\Controllers\UserController::class,'index']);
+
 
     // Computer
     Route::get('/computer', [\App\Http\Controllers\ComputerController::class,'index']);
@@ -38,15 +41,20 @@ Route::middleware(['auth'])->group(function(){
     Route::delete('/computer/{id}', [\App\Http\Controllers\ComputerController::class,'destroy']);
     Route::get('/computer/imageComputer/{id}/{idImage}', [\App\Http\Controllers\ComputerController::class,'destroyImageComputer']);
 
+    //tool printer dan lain lain
     Route::get('/tool', [\App\Http\Controllers\ToolController::class,'index']);
     Route::get('/tool/create', [\App\Http\Controllers\ToolController::class,'create']);
     Route::post('/tool', [\App\Http\Controllers\ToolController::class,'store']);
     Route::put('/tool/update-status', [\App\Http\Controllers\ToolController::class,'updateStatus']);
     Route::get('/tool/{id}', [\App\Http\Controllers\ToolController::class,'show']);
     
+    //plant
+    Route::get('/assetPlant/{id}', [\App\Http\Controllers\AssetController::class,'show']);
+
 });
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('getRoom',[\App\Http\Controllers\ToolController::class,'getRoom'])->name('getRoom');
 Route::get('search-name',[\App\Http\Controllers\UserController::class,'searchUser']);

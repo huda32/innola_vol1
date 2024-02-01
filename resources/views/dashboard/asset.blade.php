@@ -11,13 +11,13 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Komputer</span>
-                <span class="info-box-number">41,410</span>
+                <span class="info-box-number">{{ $computer}}</span>
 
                 <div class="progress">
                   <div class="progress-bar" style="width: 70%"></div>
                 </div>
                 <span class="progress-description">
-                  70% Increase in 30 Days
+                  Seluruh Asset Komputer
                 </span>
               </div>
               <!-- /.info-box-content -->
@@ -34,13 +34,13 @@
 
           <div class="info-box-content">
             <span class="info-box-text">Printer Dan Piranti Lain</span>
-            <span class="info-box-number">41,410</span>
+            <span class="info-box-number">{{ $tool}}</span>
 
             <div class="progress">
               <div class="progress-bar" style="width: 70%"></div>
             </div>
             <span class="progress-description">
-              70% Increase in 30 Days
+              Seluruh Asset Tool IT
             </span>
           </div>
           <!-- /.info-box-content -->
@@ -150,7 +150,7 @@
         <!-- /.info-box -->
       </div>
       <div class="col-md-3 col-sm-6 col-12">
-        <a href="/computer">
+        <a href="#">
             <div class="info-box bg-gradient-info">
           <span class="info-box-icon"><i class="far fa-bookmark"></i></span>
 
