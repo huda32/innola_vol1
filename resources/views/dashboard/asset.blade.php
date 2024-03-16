@@ -173,8 +173,6 @@
     </div>
    
   </div><!-- /.container-fluid -->
-
-
-  
+ 
 @endsection
 

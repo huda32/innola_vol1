@@ -11,6 +11,7 @@ use App\Models\Mous;
 use App\Models\PictureComputer;
 use App\Models\Status;
 use App\Models\User;
+use App\Models\Userp5;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -82,6 +83,7 @@ class ComputerController extends Controller
     
 
     public function storeImage(Request $request){
+        // dd($request->all());
         $request->validate([
             'image' => 'required',         
         ]);
@@ -114,7 +116,7 @@ class ComputerController extends Controller
     public function edit($id){
         $computer = computer::find($id); 
         $komputer = ComputerUnit::all();
-        $user = User::all();
+        $user = Userp5::all();
         $monitor = Monitor::all();
         $mouse = Mous::all();
         $keyboard = keyboard::all();  

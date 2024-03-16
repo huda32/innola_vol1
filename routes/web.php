@@ -45,8 +45,13 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/tool', [\App\Http\Controllers\ToolController::class,'index']);
     Route::get('/tool/create', [\App\Http\Controllers\ToolController::class,'create']);
     Route::post('/tool', [\App\Http\Controllers\ToolController::class,'store']);
+    Route::post('/tool/store-image', [\App\Http\Controllers\ToolController::class,'storeImage']);
     Route::put('/tool/update-status', [\App\Http\Controllers\ToolController::class,'updateStatus']);
+    Route::put('/tool/update-room', [\App\Http\Controllers\ToolController::class,'updateRoom']);
     Route::get('/tool/{id}', [\App\Http\Controllers\ToolController::class,'show']);
+    Route::get('/tool/edit/{id}', [\App\Http\Controllers\ToolController::class,'edit']);
+    Route::put('/tool/{id}', [\App\Http\Controllers\ToolController::class,'update']);
+    Route::get('/tool/qrcode_refresh/{id}', [\App\Http\Controllers\ToolController::class,'qrcodeRefresh']);
     
     //plant
     Route::get('/assetPlant/{id}', [\App\Http\Controllers\AssetController::class,'show']);

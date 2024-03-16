@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Picture;
+
 use App\Models\PictureTool;
 use App\Models\Plant;
 use App\Models\Room;
@@ -23,8 +23,6 @@ class ToolController extends Controller
     }
 
     public function create(){   
-        // $room = Room::all()->pluck();
-
         $plants = Plant::all()->pluck("name","id");
         $tool = Tool::all();
         $toolUnit = ToolUnit::all();  
@@ -67,23 +65,47 @@ class ToolController extends Controller
 
         foreach ($request->file('image') as $file) {
             $filename = time().rand(1,200).'.'.$file->extension();
-            // $file->move(public_path('alat'),$filename);
             Storage::disk('public')->put('alat/'.$filename, file_get_contents($file));
             PictureTool::create([
                 'tool_id' => $alat->id,
                 'filename' => $filename
             ]);
         }
-
         return redirect('/tool')->with('success','Data Computer Sudah Di Update');
+
     }
-    public function updateStatus(Request $request){
-        // dd($request->all());
-        
+    
+    public function updateStatus(Request $request){ 
         $tools = Tool::find($request->tool_id);
         $tools->statuses()->attach($request->status_id, ['berita' => $request->description , 'tanggal' => $request->tanggal]);
-        return redirect('/tool'.'/'.$request->tool_id)->with('success','Status Komputer Berhasil Diubah');
-        
+        return redirect('/tool'.'/'.$request->tool_id)->with('success','Status Komputer Berhasil Diubah');  
+    }
+
+    public function updateRoom(Request $request){ 
+        // dd($request->all());
+        $tools = Tool::find($request->tool_id);
+        $tools->update([
+            'plant_id' =>  $request->plant, 
+            'room_id' =>  $request->room, 
+        ]);
+        return redirect('/tool'.'/'.'edit'.'/'.$request->tool_id)->with('success','Alamat Ruangan Berhasil Diubah');  
+    }
+
+    public function storeImage(Request $request){
+        // dd($request->all());
+        $request->validate([
+            'image' => 'required',         
+        ]);
+
+        foreach ($request->file('image') as $file) {
+            $filename = time().rand(1,200).'.'.$file->extension();
+            Storage::disk('public')->put('alat/'.$filename, file_get_contents($file));
+            PictureTool::create([
+                'tool_id' => $request->tool_id,
+                'filename' => $filename
+            ]);
+        }
+        return redirect('/tool'.'/'.$request->tool_id)->with('success','Image Berhasil Diubah');
     }
 
     public function show($id){
@@ -93,6 +115,32 @@ class ToolController extends Controller
         $cek = $products->pictures;
 
        return view('tool.show',compact('tools','statuses','products','cek'));
+    }
+
+    public function  edit($id){
+        $tool = Tool::find($id);
+        $plants = Plant::all()->pluck("name","id");
+        $toolUnit = ToolUnit::all();          
+        return view('tool.update', compact('tool','plants','toolUnit'));
+    }
+
+    public function qrcodeRefresh($id){
+        $tool = Tool::find($id);
+        $imageDel = $tool->code;
+        Storage::disk('public')->delete($imageDel);
+        $image =  time().rand(1,200).'.png';
+        $tool->update([
+            'id' => $id,
+            'code' => $image
+        ]);
+        $qrcode = QrCode::format('png')->size(300)->errorCorrection('H')->generate('http://127.0.0.1:8000/'.'computer.show/'.$id);
+        Storage::disk('public')->put($image, $qrcode);
+        return redirect('/tool'.'/'.$id)->with('success','Barcode Sudah direfresh');
+    }
+
+    public function update(Request $request, $id){
+        dd($request->all());
+    
     }
 
     

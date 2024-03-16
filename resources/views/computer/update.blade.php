@@ -35,12 +35,18 @@
         <form action="/computer/{{ $computer->id }}" method="POST">
           @method('put')
           @csrf
-                      
-       
 
         <div class="form-group">
-          <label>Nama User</label>
-          <input  type="text" value="{{$computer->user->name}}" class="form-control" readonly>
+          <label for="exampleInputEmail1">Nama User</label>
+          <select class="form-control" name="user_id">
+            <option value="{{$computer->user_id}}">{{$computer->user->name}}</option>
+            @foreach ($user as $item)
+            <option value="{{ $item->id}}">{{ $item->name}}</option>
+            @endforeach
+          </select>
+          {{-- <a class="pensil"  data-toggle="modal" data-target="#modal-success" hak_id="{{$computer->id}}"> --}}
+            {{-- <input  value="{{$computer->user->name}}" class="form-control " readonly> --}}
+          {{-- </a> --}}
         </div>
 
         <div class="form-group">
@@ -125,6 +131,43 @@
 
 </div>
 </div>
+
+<div class="modal fade" id="modal-success" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cari User</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/tool/update-room" method="post" id="formUpdate">
+          @method('put')
+          @csrf
+          <input type="hidden" name="tool_id" >
+          {{-- <select  name="user_id"  class="selectNama" ></select> --}}
+          <div class="form-control">
+          <div class="content">
+            <div class="search">
+              <input type="text" name="" id="optionSearch" placeholder="Search">
+            </div>
+            
+              <ul class="options">
+
+              </ul>
+            </div>
+            
+          </div>
+     
+      </div>
+      <div class="modal-footer">
+        {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> --}}
+        <button type="button" class="btn btn-primary" id="btnUpdate">Update</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection
 
 @push('scripts')
@@ -132,6 +175,9 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     $(document).ready(function(){
+      .click(function(){
+        $("selectNama")
+      })
         $('.selectNama').select2({
           minimumInputLength:3,  
           ajax: {
@@ -147,5 +193,20 @@
             }
             });
     });
+
+    <script>
+  $(document).ready(function(){
+      $("#btnUpdate").click(function(){
+        $("#formUpdate").submit();
+      });
+
+      $(".pensil").click(function(){
+        var hak_tool = $(this).attr('hak_id');
+        $("input[name=tool_id]").val(hak_tool);
+        // alert(hak_tool);
+      })
+    });
 </script>
+</script>
+
 @endpush

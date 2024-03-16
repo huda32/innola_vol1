@@ -162,7 +162,7 @@
 <script>
     $(document).ready(function(){
         $('.selectNama').select2({
-          minimumInputLength:3,  
+          minimumInputLength:2,  
           ajax: {
                 url: '/search-name',
                 data: function (params) {
