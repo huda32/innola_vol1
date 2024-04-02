@@ -138,10 +138,27 @@ class ToolController extends Controller
         return redirect('/tool'.'/'.$id)->with('success','Barcode Sudah direfresh');
     }
 
-    public function update(Request $request, $id){
-        dd($request->all());
-    
+    public function imageDelete($id){
+        $tool = Tool::find($id);
+        $image = Tool::with('pictures')->find($id);
+        $images = $image->pictures;
+        return view('tool.imageDelete',compact(['tool','image','images']));
+        
     }
 
-    
+    public function destroyImageTool($id, $idImage){
+        $picture = PictureTool::find($idImage);
+        $gambar = $picture->filename;
+        $picture->delete();
+        Storage::disk('public')->delete('alat/'.$gambar);
+        return redirect('/tool'.'/'.'imageDelete/'.$id)->with('success','Gambar Sudah Dihapus');
+    }
+
+    // public function destroyImageComputer($id, $idImage){
+    //     $picture = PictureComputer::find($idImage);
+    //     $gambar = $picture->filename;
+    //     $picture->delete();
+    //     Storage::disk('public')->delete('komputer/'.$gambar);
+    //     return redirect('/computer'.'/'.'imageEdit/'.$id)->with('success','Gambar Sudah Dihapus');
+    // }
 }

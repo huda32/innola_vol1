@@ -25,7 +25,6 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/assetProduksi',[App\Http\Controllers\DashboardController::class,'assetProduksi']);
     Route::get('/users', [\App\Http\Controllers\UserController::class,'index']);
 
-
     // Computer
     Route::get('/computer', [\App\Http\Controllers\ComputerController::class,'index']);
     Route::get('/computer/create', [\App\Http\Controllers\ComputerController::class,'create']);
@@ -49,9 +48,14 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/tool/update-status', [\App\Http\Controllers\ToolController::class,'updateStatus']);
     Route::put('/tool/update-room', [\App\Http\Controllers\ToolController::class,'updateRoom']);
     Route::get('/tool/{id}', [\App\Http\Controllers\ToolController::class,'show']);
+    Route::get('/tool/imageDelete/{id}', [\App\Http\Controllers\ToolController::class,'imageDelete']);
     Route::get('/tool/edit/{id}', [\App\Http\Controllers\ToolController::class,'edit']);
     Route::put('/tool/{id}', [\App\Http\Controllers\ToolController::class,'update']);
     Route::get('/tool/qrcode_refresh/{id}', [\App\Http\Controllers\ToolController::class,'qrcodeRefresh']);
+    Route::get('/tool/imageDelete/{id}/{idImage}', [\App\Http\Controllers\ToolController::class,'destroyImageTool']);
+
+    //cctv
+    Route::get('/cctv', [\App\Http\Controllers\CctvController::class,'index']);
     
     //plant
     Route::get('/assetPlant/{id}', [\App\Http\Controllers\AssetController::class,'show']);

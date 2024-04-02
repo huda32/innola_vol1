@@ -154,7 +154,7 @@
                 <a class="pen" type="button" data-toggle="modal" data-target="#modal-image" hak_id="{{$tools->id}}">
                   <i class="fas fa-plus"></i>
                 </a>
-                <a href="/computer/imageEdit/{{$tools->id}}" type="button">
+                <a href="/tool/imageDelete/{{$tools->id}}" type="button">
                   <i class="fas fa-minus"></i>
                 </a>
                 </button>

@@ -70,6 +70,7 @@
       </div>
       <!-- ./col -->
       <div class="col-md-3 col-sm-6 col-12">
+        <a href="/cctv">
         <div class="info-box bg-gradient-success">
           <span class="info-box-icon"><i class="far fa-thumbs-up"></i></span>
 
@@ -88,6 +89,7 @@
         </div>
         <!-- /.info-box -->
       </div>
+    </a>
       <!-- ./col -->
     </div>
     <!-- /.row -->
